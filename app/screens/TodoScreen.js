@@ -1,35 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View } from 'react-native';
-import AppLoading from 'expo-app-loading';
 import { useFonts, PatuaOne_400Regular } from '@expo-google-fonts/patua-one';
 
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 import TodoCard from '../components/TodoCard';
+import data from '../storage/data';
+import NewTodoModal from '../components/NewTodoModal';
 
 function TodoScreen() {
+  const [modalVisible, setModalVisible] = useState(true);
+
   const [fontsLoaded] = useFonts({
     PatuaOne_400Regular
   });
 
-  if (!fontsLoaded) return <AppLoading />;
+  const [todos] = useState(data);
+
+  if (!fontsLoaded) return <View></View>;
 
   return (
     <>
       <Screen style={styles.container}>
         <Text style={styles.text}>Let's do this!</Text>
-
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        
+        {!modalVisible && todos.map(t => <TodoCard todo={t} key={t.id} />)}
       </Screen>
       <LinearGradient
         colors={[colors.gradient_bg_top, colors.gradient_bg_btm]}
         style={styles.background}
       />
+
+      <NewTodoModal visible={modalVisible} />
     </>
   );
 }
