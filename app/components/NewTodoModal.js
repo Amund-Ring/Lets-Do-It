@@ -1,85 +1,76 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import colors from '../config/colors';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
 
-function NewTodoModal({ visible }) {
+import colors from '../config/colors';
+
+function NewTodoModal({ modalVisible, setModalVisible }) {
   const [text, onChangeText] = useState('');
   const [placeholder, setPlaceholder] = useState('description...');
 
-  if (!visible) return null;
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
 
-  
+  if (!modalVisible) return null;
 
   return (
-    <>
-      <View style={styles.background}></View>
-      <View style={styles.centeredView}>
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={visible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}
-        >
-            <View style={styles.centeredView}>
-              <View style={styles.formContainer}>
-                <View style={styles.emojiContainer}>
-                  <Text style={styles.emoji}>😊</Text>
-                </View>
-                <View style={styles.textContainer}>
-                  {/* <Text style={styles.text}>{text}</Text> */}
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={onChangeText}
-                    value={text}
-                    placeholder={placeholder}
-                    onFocus={() => setPlaceholder('')}
-                    // clearTextOnFocus
-                    autoFocus
-                    maxLength={20}
-                  />
-                </View>
+    <Modal isVisible={modalVisible} style={{margin: 0, paddingHorizontal: 25}}>
+      <TouchableWithoutFeedback onPress={toggleModal}>
+        <View style={{ flex: 1 }}>
+          {/* <Text>Hello!</Text> */}
+          {/* <Button title='Hide modal' onPress={toggleModal} /> */}
 
-                <View style={styles.checkContainer}>
-                  {true ? (
-                    <MaterialCommunityIcons
-                      name='check-circle-outline'
-                      size={30}
-                      color={colors.newTodo_check}
-                    />
-                  ) : null}
-                </View>
-              </View>
+          <TouchableWithoutFeedback onPress={() => console.log('Modal stays')}>
+
+          <View style={styles.newTodoCard}>
+            <View style={styles.emojiContainer}>
+              <Text style={styles.emoji}>😊</Text>
             </View>
-        </Modal>
-      </View>
-    </>
+            <View style={styles.textContainer}>
+              {/* <Text style={styles.text}>{text}</Text> */}
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeText}
+                value={text}
+                placeholder={placeholder}
+                onFocus={() => setPlaceholder('')}
+                // clearTextOnFocus
+                autoFocus
+                maxLength={20}
+              />
+            </View>
+
+            <View style={styles.checkContainer}>
+              {true ? (
+                <MaterialCommunityIcons
+                  name='check-circle-outline'
+                  size={30}
+                  color={colors.newTodo_check}
+                />
+              ) : null}
+            </View>
+          </View>
+
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'gray',
-    opacity: 0.4
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-    paddingHorizontal: 25
-  },
-  formContainer: {
+  newTodoCard: {
     height: 90,
     width: '100%',
     backgroundColor: colors.todo_bg,
@@ -91,7 +82,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 14,
-    bottom: 80
+
+    marginTop: 260
   },
   emojiContainer: {
     width: 50,

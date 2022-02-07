@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: colors.todo_border,
     borderRadius: 18,
-    marginBottom: 20,
+    marginBottom: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

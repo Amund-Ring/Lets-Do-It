@@ -9,8 +9,8 @@ import TodoCard from '../components/TodoCard';
 import data from '../storage/data';
 import NewTodoModal from '../components/NewTodoModal';
 
-function TodoScreen() {
-  const [modalVisible, setModalVisible] = useState(true);
+function TodoScreen({ modalVisible, setModalVisible }) {
+  // const [modalVisible, setModalVisible] = useState(true);
 
   const [fontsLoaded] = useFonts({
     PatuaOne_400Regular
@@ -31,7 +31,7 @@ function TodoScreen() {
         style={styles.background}
       />
 
-      <NewTodoModal visible={modalVisible} />
+      <NewTodoModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </>
   );
 }

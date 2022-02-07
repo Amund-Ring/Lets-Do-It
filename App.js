@@ -11,11 +11,12 @@ import colors from './app/config/colors';
 import IosFonts from './app/components/IosFonts';
 
 export default function App() {
+  const [modalVisible, setModalVisible] = useState(false);
   
   const Tab = createBottomTabNavigator();
 
   const handlePress = () => {
-    Alert.alert('🙀');
+    setModalVisible(true);
   };
   
 
@@ -29,7 +30,7 @@ export default function App() {
         >
           <Tab.Screen
             name='Add'
-            component={TodoScreen}
+            children={()=><TodoScreen modalVisible={modalVisible} setModalVisible={setModalVisible} />}
             options={{
               headerShown: false,
               tabBarButton: () => (
