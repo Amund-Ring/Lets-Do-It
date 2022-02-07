@@ -1,4 +1,4 @@
-# Lets-Do-It
+# Lets-Do-This
 Todo list application in React Native
 
 \*\*\*Work in progress\*\*\*
