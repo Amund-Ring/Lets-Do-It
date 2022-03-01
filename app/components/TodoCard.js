@@ -1,39 +1,43 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../config/colors';
 
 function TodoCard({ todo }) {
-  return (
-    <View
-      style={
-        todo.completed
-          ? [styles.container, styles.container_done]
-          : styles.container
-      }
-    >
-      <View style={styles.emojiContainer}>
-        <Text style={styles.emoji}>{todo.emoji}</Text>
-      </View>
-      <View style={styles.textContainer}>
-        <Text
-          style={todo.completed ? [styles.text, styles.text_done] : styles.text}
-        >
-          {todo.description}
-        </Text>
-      </View>
+  const [completed, setCompleted] = useState(todo.completed);
 
-      <View style={styles.binContainer}>
-        {todo.completed ? (
-          <MaterialCommunityIcons
-            name='delete-outline'
-            size={28}
-            color={colors.todo_text}
-          />
-        ) : null}
+  return (
+    <TouchableWithoutFeedback onPress={() => console.log('click')}>
+      <View
+        style={
+          completed
+            ? [styles.container, styles.container_done]
+            : styles.container
+        }
+      >
+        <View style={styles.emojiContainer}>
+          <Text style={styles.emoji}>{todo.emoji}</Text>
+        </View>
+        <View style={styles.textContainer}>
+          <Text
+            style={completed ? [styles.text, styles.text_done] : styles.text}
+          >
+            {todo.description}
+          </Text>
+        </View>
+
+        <View style={styles.binContainer}>
+          {completed ? (
+            <MaterialCommunityIcons
+              name='delete-outline'
+              size={28}
+              color={colors.todo_text}
+            />
+          ) : null}
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

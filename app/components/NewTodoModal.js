@@ -11,57 +11,68 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Modal from 'react-native-modal';
-
+import dataHandler from '../storage/dataHandler';
 import colors from '../config/colors';
 
-function NewTodoModal({ modalVisible, setModalVisible }) {
-  const [text, onChangeText] = useState('');
+function NewTodoModal({ modalVisible, setModalVisible, setTodos }) {
+  const [description, setDescription] = useState('');
   const [placeholder, setPlaceholder] = useState('description...');
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
+  const createTodo = async () => {
+    if (description.length === 0) return;
+    const updatedDB = await dataHandler.createNewTodo(description);
+    setTodos(updatedDB);
+    setDescription('');
+    setModalVisible(false);
+  };
+
   if (!modalVisible) return null;
 
   return (
-    <Modal isVisible={modalVisible} style={{margin: 0, paddingHorizontal: 25}}>
+    <Modal
+      isVisible={modalVisible}
+      style={{ margin: 0, paddingHorizontal: 25 }}
+    >
       <TouchableWithoutFeedback onPress={toggleModal}>
         <View style={{ flex: 1 }}>
           {/* <Text>Hello!</Text> */}
           {/* <Button title='Hide modal' onPress={toggleModal} /> */}
 
           <TouchableWithoutFeedback onPress={() => console.log('Modal stays')}>
-
-          <View style={styles.newTodoCard}>
-            <View style={styles.emojiContainer}>
-              <Text style={styles.emoji}>😊</Text>
-            </View>
-            <View style={styles.textContainer}>
-              {/* <Text style={styles.text}>{text}</Text> */}
-              <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder={placeholder}
-                onFocus={() => setPlaceholder('')}
-                // clearTextOnFocus
-                autoFocus
-                maxLength={20}
-              />
-            </View>
-
-            <View style={styles.checkContainer}>
-              {true ? (
-                <MaterialCommunityIcons
-                  name='check-circle-outline'
-                  size={30}
-                  color={colors.newTodo_check}
+            <View style={styles.newTodoCard}>
+              <View style={styles.emojiContainer}>
+                <Text style={styles.emoji}>😊</Text>
+              </View>
+              <View style={styles.textContainer}>
+                {/* <Text style={styles.text}>{text}</Text> */}
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setDescription}
+                  value={description}
+                  placeholder={placeholder}
+                  onFocus={() => setPlaceholder('')}
+                  // clearTextOnFocus
+                  autoFocus
+                  maxLength={20}
                 />
-              ) : null}
-            </View>
-          </View>
+              </View>
 
+              <View style={styles.checkContainer}>
+                {true ? (
+                  <TouchableWithoutFeedback onPress={createTodo}>
+                    <MaterialCommunityIcons
+                      name='check-circle-outline'
+                      size={30}
+                      color={colors.newTodo_check}
+                    />
+                  </TouchableWithoutFeedback>
+                ) : null}
+              </View>
+            </View>
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
