@@ -1,14 +1,48 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
 import colors from '../config/colors';
+import dataHandler from '../storage/dataHandler';
 
 function TodoCard({ todo }) {
   const [completed, setCompleted] = useState(todo.completed);
+  const [sound, setSound] = useState();
+
+  const playTickSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(
+      await require(`../../assets/tick.mp3`)
+    );
+    setSound(sound);
+    await sound.playAsync();
+  };
+
+  const playTockSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(
+      await require(`../../assets/tock.mp3`)
+    );
+    setSound(sound);
+    await sound.playAsync();
+  };
+
+  // React.useEffect(() => {
+  //   return sound
+  //     ? () => {
+  //         console.log('Unloading Sound');
+  //         sound.unloadAsync();
+  //       }
+  //     : undefined;
+  // }, [sound]);
+
+  const toggleCompleted = () => {
+    completed ? playTockSound() : playTickSound();
+    dataHandler.toggleCompleted(todo.id);
+    setCompleted(c => !c);
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={() => console.log('click')}>
+    <TouchableWithoutFeedback onPress={toggleCompleted}>
       <View
         style={
           completed

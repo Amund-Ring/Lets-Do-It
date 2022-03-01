@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: colors.white,
     fontSize: 38,
-    fontFamily: 'PatuaOne_400Regular'
+    fontFamily: 'PatuaOne_400Regular',
+
   }
 });
 
