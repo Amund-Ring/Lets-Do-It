@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { logToConsole } from 'react-native/Libraries/Utilities/RCTLog';
 
 //Stores the given todoDB to local storage
 const storeData = async todoDB => {
@@ -74,12 +73,21 @@ const toggleCompleted = async id => {
   await storeData(todoDB);
 };
 
+//Deletes the todo with the specified id and returns updated todoDB
+const deleteTodo = async id => {
+  const todoDB = await getTodos();
+  const updatedTodoDB = todoDB.filter(todo => todo.id !== id);
+  await storeData(updatedTodoDB);
+  return updatedTodoDB;
+};
+
 const clearTodoDB = async () => await storeData([]);
 
 export default {
+  clearTodoDB,
+  createNewTodo,
+  deleteTodo,
   getTodos,
   storeData,
-  createNewTodo,
-  clearTodoDB,
   toggleCompleted
 };

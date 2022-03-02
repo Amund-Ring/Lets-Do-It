@@ -44,7 +44,7 @@ function TodoScreen({ modalVisible, setModalVisible }) {
     <>
       <Screen style={styles.container}>
         <Text style={styles.text} onPress={titlePress}>Let's do this!</Text>
-        {!modalVisible && todos.map(t => <TodoCard todo={t} key={t.id} />)}
+        {!modalVisible && todos.map(t => <TodoCard todo={t} setTodos={setTodos} key={t.id} />)}
       </Screen>
       <LinearGradient
         colors={[colors.gradient_bg_top, colors.gradient_bg_btm]}

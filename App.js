@@ -37,7 +37,6 @@ export default function App() {
             options={{
               headerShown: false,
               tabBarButton: () => (
-                // <MaterialCommunityIcons name='home' color={color} size={size} />
                 <NewTodoButton onPress={handlePress} />
               )
             }}

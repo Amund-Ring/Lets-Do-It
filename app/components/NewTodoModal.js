@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import Modal from 'react-native-modal';
 import dataHandler from '../storage/dataHandler';
 import colors from '../config/colors';
 
@@ -32,13 +29,11 @@ function NewTodoModal({ modalVisible, setModalVisible, setTodos }) {
 
   if (!modalVisible) return null;
 
+
   return (
-    <Modal
-      isVisible={modalVisible}
-      style={{ margin: 0, paddingHorizontal: 25 }}
-    >
-      <TouchableWithoutFeedback onPress={toggleModal}>
-        <View style={{ flex: 1 }}>
+    <>
+      <TouchableWithoutFeedback onPress={toggleModal} style={{flex: 1}}>
+        <View style={styles.container}>
           {/* <Text>Hello!</Text> */}
           {/* <Button title='Hide modal' onPress={toggleModal} /> */}
 
@@ -76,11 +71,24 @@ function NewTodoModal({ modalVisible, setModalVisible, setTodos }) {
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+      <View style={styles.background}></View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+
+    padding: 20,
+    width: '100%',
+    height: '100%',
+    // borderWidth: 5,
+    // borderColor: 'green',
+    // backgroundColor: '#363738',
+    // opacity: 0.5
+    zIndex: 10
+  },
   newTodoCard: {
     height: 90,
     width: '100%',
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 14,
 
-    marginTop: 260
+    marginTop: 260,
   },
   emojiContainer: {
     width: 50,
@@ -133,6 +141,15 @@ const styles = StyleSheet.create({
     alignItems: 'center'
 
     // borderWidth: 2
+  },
+  background: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    // borderWidth: 10,
+    // borderColor: 'pink',
+    backgroundColor: '#000',
+    opacity: 0.4
   }
 });
 
