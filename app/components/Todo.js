@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../config/colors';
 import dataHandler from '../storage/dataHandler';
 
-function TodoCard({ todo, setTodos }) {
+function Todo({ todo, setTodos }) {
   const [completed, setCompleted] = useState(todo.completed);
 
   const toggleCompleted = () => {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: colors.todo_border,
     borderRadius: 18,
-    marginBottom: 16,
+    marginBottom: 14,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -92,8 +92,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Open Sans',
     justifyContent: 'center',
     alignItems: 'center'
-
-    // borderWidth: 2
   },
   text: {
     fontSize: 24,
@@ -109,9 +107,7 @@ const styles = StyleSheet.create({
     width: 40,
     justifyContent: 'center',
     alignItems: 'center'
-
-    // borderWidth: 2
   }
 });
 
-export default TodoCard;
+export default Todo;

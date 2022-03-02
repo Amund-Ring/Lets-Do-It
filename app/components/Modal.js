@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,9 +11,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import dataHandler from '../storage/dataHandler';
 import colors from '../config/colors';
 
-function NewTodoModal({ modalVisible, setModalVisible, setTodos }) {
+function Modal({ modalVisible, setModalVisible, setTodos }) {
   const [description, setDescription] = useState('');
   const [placeholder, setPlaceholder] = useState('description...');
+
+  useEffect(() => {
+    setDescription('');
+  }, [modalVisible])
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -37,7 +41,7 @@ function NewTodoModal({ modalVisible, setModalVisible, setTodos }) {
           {/* <Text>Hello!</Text> */}
           {/* <Button title='Hide modal' onPress={toggleModal} /> */}
 
-          <TouchableWithoutFeedback onPress={() => console.log('Modal stays')}>
+          <TouchableWithoutFeedback >
             <View style={styles.newTodoCard}>
               <View style={styles.emojiContainer}>
                 <Text style={styles.emoji}>😊</Text>
@@ -79,8 +83,7 @@ function NewTodoModal({ modalVisible, setModalVisible, setTodos }) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-
-    padding: 20,
+    padding: 25,
     width: '100%',
     height: '100%',
     // borderWidth: 5,
@@ -153,4 +156,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewTodoModal;
+export default Modal;

@@ -1,39 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFonts, PatuaOne_400Regular } from '@expo-google-fonts/patua-one';
 
 import colors from '../config/colors';
-import Screen from '../components/Screen';
-import TodoCard from '../components/TodoCard';
-import NewTodoModal from '../components/NewTodoModal';
+import Todo from '../components/Todo';
+import Modal from '../components/Modal';
 import dataHandler from '../storage/dataHandler';
 
-import data from '../storage/data';
+import testData from '../storage/testData';
 
-function TodoScreen({ modalVisible, setModalVisible }) {
-
+function Main({ modalVisible, setModalVisible }) {
   const [todos, setTodos] = useState([]);
-  
+
   const getTodos = async () => {
     const todoDB = await dataHandler.getTodos();
     setTodos(todoDB);
-  }
-  
+  };
+
   useEffect(() => {
     getTodos();
-  }, [])
+    // getTestData();
+  }, []);
 
-
-  const titlePress = async () => {
+  const getTestData = async () => {
     await dataHandler.clearTodoDB();
-    await dataHandler.storeData(data);
+    await dataHandler.storeData(testData);
     await getTodos();
-  }
-  
-  
-  
-  
+  };
+
   const [fontsLoaded] = useFonts({
     PatuaOne_400Regular
   });
@@ -42,26 +37,34 @@ function TodoScreen({ modalVisible, setModalVisible }) {
 
   return (
     <>
-      <Screen style={styles.container}>
-        <Text style={styles.text} onPress={titlePress}>Let's do this!</Text>
-        {!modalVisible && todos.map(t => <TodoCard todo={t} setTodos={setTodos} key={t.id} />)}
-      </Screen>
       <LinearGradient
         colors={[colors.gradient_bg_top, colors.gradient_bg_btm]}
         style={styles.background}
+      >
+        <ScrollView>
+          <SafeAreaView>
+            <View style={styles.container}>
+              <Text style={styles.text}>Let's do this!</Text>
+              {!modalVisible &&
+                todos.map(t => (
+                  <Todo todo={t} setTodos={setTodos} key={t.id} />
+                ))}
+            </View>
+          </SafeAreaView>
+        </ScrollView>
+      </LinearGradient>
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        setTodos={setTodos}
       />
-
-      <NewTodoModal modalVisible={modalVisible} setModalVisible={setModalVisible} setTodos={setTodos} />
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.app_bg,
-    paddingTop: 30,
-    paddingHorizontal: 25
+    padding: 20
   },
   background: {
     position: 'absolute',
@@ -76,9 +79,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: colors.white,
     fontSize: 38,
-    fontFamily: 'PatuaOne_400Regular',
-
+    fontFamily: 'PatuaOne_400Regular'
   }
 });
 
-export default TodoScreen;
+export default Main;

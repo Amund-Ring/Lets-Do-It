@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import TodoScreen from './app/screens/TodoScreen';
-import NewTodoButton from './app/components/NewTodoButton';
+import Main from './app/screens/Main';
+import Button from './app/components/Button';
 import colors from './app/config/colors';
 
 export default function App() {
@@ -29,7 +29,7 @@ export default function App() {
           <Tab.Screen
             name='Add'
             children={() => (
-              <TodoScreen
+              <Main
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
               />
@@ -37,7 +37,7 @@ export default function App() {
             options={{
               headerShown: false,
               tabBarButton: () => (
-                <NewTodoButton onPress={handlePress} />
+                <Button onPress={handlePress} />
               )
             }}
           />

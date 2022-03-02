@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../config/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function NewTodoButton({ onPress }) {
+function Button({ onPress }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} activeOpacity={0.6}>
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewTodoButton;
+export default Button;
